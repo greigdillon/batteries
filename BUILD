@@ -5,11 +5,18 @@ cc_library(
   includes = ["include","include/objectbox"],
   copts = ["-fpic",],
   linkopts = ["-lpthread","-ldl"],
-  visibility = ["//visibility:public"],
+  visibility = ["//visibility:public"],  
+  linkstatic = True,
 )
 
 cc_test(
   name = "test",
   deps = ["grpc_clang_13"],
   srcs = ["test.cpp"],
+)
+
+cc_binary(
+  name = "main",
+  deps = [":grpc_clang_13"],
+  srcs = ["main.cpp"],
 )
