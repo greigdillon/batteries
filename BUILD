@@ -7,3 +7,9 @@ cc_library(
   linkopts = ["-lpthread","-ldl"],
   visibility = ["//visibility:public"],
 )
+
+cc_test(
+  name = "test",
+  deps = ["grpc_clang_13"],
+  srcs = ["test.cpp"],
+)
