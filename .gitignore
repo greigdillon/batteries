@@ -3,3 +3,4 @@ bazel-*
 *.zip
 compile_commands.json
 include/boost
+*.xz
