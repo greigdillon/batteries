@@ -10,12 +10,11 @@ GRPC & Protobuf
 
 Flatbuffers
 
-Objectbox
-
 Abseil
 
 GTest/GMock
 
+Objectbox
 
 
 In .bazelrc file add
