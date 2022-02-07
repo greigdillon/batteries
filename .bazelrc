@@ -1,1 +1,1 @@
-build --repo_env=CC=clang-13 --action_env=BAZELCXX_OPTS="-std=c++20:-w -lpthread -Wl--no-undefined"
+build --repo_env=CC=clang-13 --action_env=BAZELCXX_OPTS="-std=c++20:-w:-lpthread"

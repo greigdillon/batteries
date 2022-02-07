@@ -13,10 +13,8 @@ cc_binary(
   srcs = ["main.cpp"],
 )
 
-# cc_library(
-#     name = 'date',
-#     srcs = [],
-#     includes = ['include'],
-#     hdrs = glob(['include/date/**']),
-#     visibility = ['//visibility:public'],
-# )
+cc_test(
+  name = "test",
+  deps = [":lib"],
+  srcs = ["test.cpp"],
+)
