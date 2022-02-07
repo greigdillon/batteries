@@ -7,15 +7,3 @@ cc_library(
   linkopts = ["-lpthread","-ldl"],
   visibility = ["//visibility:public"],
 )
-
-cc_binary(
-  name = "main",
-  deps = [":grpc_clang_13"],
-  srcs = ["main.cpp"],
-)
-
-cc_test(
-  name = "test",
-  deps = [":grpc_clang_13"],
-  srcs = ["test.cpp"],
-)
