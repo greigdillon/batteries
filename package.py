@@ -5,8 +5,10 @@ import sh
 import os
 import yaml
 
-git_branch = sh.git("rev-parse","--abbrev-ref","HEAD")
+git_branch = str(sh.git("rev-parse","--abbrev-ref","HEAD")).replace("/","_")
 echo (git_branch)
+
+
 
 try: 
     os.mkdir("release") 
@@ -14,7 +16,7 @@ except OSError as error:
   echo("")
 
 
-archive_file = "release/batteries_"+str(git_branch)+".tar.xz"
+archive_file = "release/batteries_"+git_branch+".tar.xz"
 
 with open("package.yaml", 'r') as stream:
     data_loaded = yaml.safe_load(stream)
