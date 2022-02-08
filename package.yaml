@@ -1,0 +1,9 @@
+package:
+  - BUILD
+  - WORKSPACE
+  - main.cpp
+  - test.cpp
+  - README.md
+  - include/
+  - lib/
+  - .bazelrc

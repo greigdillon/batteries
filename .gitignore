@@ -4,3 +4,4 @@ bazel-*
 compile_commands.json
 include/boost
 *.xz
+release
