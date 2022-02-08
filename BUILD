@@ -1,20 +1,21 @@
 cc_library(
-  name = "lib",  
-  hdrs = glob(["include/**"])+["hello.h"],
-  srcs = glob(["lib/**"])+["hello.cpp"],
-  includes = ["include"],
+  name = "batteries",  
+  hdrs = glob(["include/**"]),
+  srcs = glob(["lib/**"]),
+  includes = ["include","include/objectbox"],
   copts = ["-fpic",],
   linkopts = ["-lpthread","-ldl"],
-)
-
-cc_binary(
-  name = "main",
-  deps = [":lib"],
-  srcs = ["main.cpp"],
+  visibility = ["//visibility:public"],    
 )
 
 cc_test(
   name = "test",
-  deps = [":lib"],
+  deps = [":batteries"],
   srcs = ["test.cpp"],
+)
+
+cc_binary(
+  name = "main",
+  deps = [":batteries"],
+  srcs = ["main.cpp"],
 )

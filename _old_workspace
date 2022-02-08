@@ -1,0 +1,226 @@
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+# Branch: master
+# Commit: 7c95feba87ae269d09690fcebb18c77d8b8bcf6a
+# Date: 2021-11-16 02:17:58 +0000 UTC
+# URL: https://github.com/stackb/rules_proto/commit/7c95feba87ae269d09690fcebb18c77d8b8bcf6a
+#
+# V2 (#193)
+# Size: 885598 (886 kB)
+http_archive(
+    name = "build_stack_rules_proto",
+    strip_prefix = "rules_proto-4f9e9a917a16bddeaf4ecb97e437f50b3bff09d1",
+    urls = ["https://github.com/stackb/rules_proto/archive/4f9e9a917a16bddeaf4ecb97e437f50b3bff09d1.tar.gz"],
+)
+
+#--- base bazel setup
+
+register_toolchains("@build_stack_rules_proto//toolchain:standard")
+
+load("@build_stack_rules_proto//deps:core_deps.bzl", "core_deps")
+
+core_deps()
+
+load(
+    "@io_bazel_rules_go//go:deps.bzl",
+    "go_register_toolchains",
+    "go_rules_dependencies",
+)
+
+go_rules_dependencies()
+
+go_register_toolchains(version = "1.16.2")
+
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+
+gazelle_dependencies()
+
+load("@build_stack_rules_proto//:go_deps.bzl", "gazelle_protobuf_extension_go_deps")
+
+gazelle_protobuf_extension_go_deps()
+
+load("@build_stack_rules_proto//deps:protobuf_core_deps.bzl", "protobuf_core_deps")
+
+protobuf_core_deps()
+
+http_archive(
+    name = "com_github_grpc_grpc",
+    urls = [
+        "https://github.com/grpc/grpc/archive/9ffd1a7b0a240e65534942dcabf4d3828d0c6be1.tar.gz",
+    ],
+    sha256 = "987ea637191b99f61ef24c54315c6eb7457eac11107513da1562bd2213163bde",
+    strip_prefix = "grpc-9ffd1a7b0a240e65534942dcabf4d3828d0c6be1",
+)
+load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
+grpc_deps()
+load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
+grpc_extra_deps()
+
+#--- Google Test
+
+http_archive(
+    name = "com_google_googletest",
+    sha256 = "5cf189eb6847b4f8fc603a3ffff3b0771c08eec7dd4bd961bfd45477dd13eb73",
+    strip_prefix = "googletest-609281088cfefc76f9d0ce82e1ff6c30cc3591e5",
+    urls = ["https://github.com/google/googletest/archive/609281088cfefc76f9d0ce82e1ff6c30cc3591e5.zip"],
+)
+
+# Eigen source code repository
+
+# External dependency: Eigen; has no Bazel build.
+http_archive(
+    name = "Eigen",
+    build_file_content =
+        """
+# TODO(keir): Replace this with a better version, like from TensorFlow.
+# See https://github.com/ceres-solver/ceres-solver/issues/337.
+cc_library(
+    name = 'eigen',
+    srcs = [],
+    includes = ['.'],
+    hdrs = glob(['Eigen/**']),
+    visibility = ['//visibility:public'],
+)
+""",
+    sha256 = "b4c198460eba6f28d34894e3a5710998818515104d6e74e5cc331ce31e46e626",
+    strip_prefix = "eigen-3.4.0",
+    urls = [
+        "https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.bz2",
+    ],
+)
+
+# Combinations discreture-1.2
+http_archive(
+    name = "Discreture",
+    build_file_content =
+        """
+# TODO(keir): Replace this with a better version, like from TensorFlow.
+# See https://github.com/ceres-solver/ceres-solver/issues/337.
+cc_library(
+    name = 'discreture',
+    srcs = [],
+    includes = ['.'],
+    hdrs = glob(['include/**']),
+    visibility = ['//visibility:public'],
+)
+""",
+    sha256 = "4e3e551a3298c430a7d344265570e75dd0b4185982c39e0f8d0ff96fd9fd97c2",
+    strip_prefix = "discreture-1.2",
+    urls = [
+        "https://github.com/greigdillon/discreture/archive/refs/tags/1.2.tar.gz",
+    ],
+)
+
+#Boost
+
+_RULES_BOOST_COMMIT = "652b21e35e4eeed5579e696da0facbe8dba52b1f"
+
+http_archive(
+    name = "com_github_nelhage_rules_boost",
+    sha256 = "c1b8b2adc3b4201683cf94dda7eef3fc0f4f4c0ea5caa3ed3feffe07e1fb5b15",
+    strip_prefix = "rules_boost-%s" % _RULES_BOOST_COMMIT,
+    urls = [
+        "https://github.com/nelhage/rules_boost/archive/%s.tar.gz" % _RULES_BOOST_COMMIT,
+    ],
+)
+
+load("@com_github_nelhage_rules_boost//:boost/boost.bzl", "boost_deps")
+
+boost_deps()
+#- Abseil
+
+# http_archive(
+#   name = "com_google_absl",
+#   urls = ["https://github.com/abseil/abseil-cpp/archive/98eb410c93ad059f9bba1bf43f5bb916fc92a5ea.zip"],
+#   strip_prefix = "abseil-cpp-98eb410c93ad059f9bba1bf43f5bb916fc92a5ea",
+# )
+
+# https://github.com/greigdillon/csv-parser.git
+
+#CSV parsing
+http_archive(
+    name = "csv",
+    build_file_content =
+        """
+# TODO(keir): Replace this with a better version, like from TensorFlow.
+# See https://github.com/ceres-solver/ceres-solver/issues/337.
+cc_library(
+    name = 'parser',
+    srcs = [],
+    includes = ['.'],
+    hdrs = glob(['single_include/**']),
+    visibility = ['//visibility:public'],
+)
+""",
+    strip_prefix = "csv-parser-2.1.3",
+    sha256 = "3f6ce9212e66d273de12a9671dcbf7be7da0241334dc690585dd434dce5e5acf",
+    urls = [
+        "https://github.com/greigdillon/csv-parser/archive/refs/tags/2.1.3.tar.gz",
+    ],
+)
+
+#g-logging
+
+http_archive(
+    name = "com_github_gflags_gflags",
+    sha256 = "34af2f15cf7367513b352bdcd2493ab14ce43692d2dcd9dfc499492966c64dcf",
+    strip_prefix = "gflags-2.2.2",
+    urls = ["https://github.com/gflags/gflags/archive/v2.2.2.tar.gz"],
+)
+
+http_archive(
+    name = "com_github_google_glog",
+    sha256 = "21bc744fb7f2fa701ee8db339ded7dce4f975d0d55837a97be7d46e8382dea5a",
+    strip_prefix = "glog-0.5.0",
+    urls = ["https://github.com/google/glog/archive/v0.5.0.zip"],
+)
+
+#sql11
+http_archive(
+    name = "com_objectbox",
+    build_file_content =
+        """
+# TODO(keir): Replace this with a better version, like from TensorFlow.
+# See https://github.com/ceres-solver/ceres-solver/issues/337.
+cc_library(
+    name = 'objectbox',
+     includes = ['include'],
+    srcs = ["lib/libobjectbox.so"],
+    hdrs = glob(['include/**']),
+    visibility = ['//visibility:public'],
+)
+""",
+    # strip_prefix = "objectbox-c-0.15.1",
+    urls = [
+        "https://github.com/objectbox/objectbox-c/releases/download/v0.15.1/objectbox-linux-x64.tar.gz",
+    ],
+)
+
+
+#flatbuffers
+http_archive(
+    name = "com_flatbuffers",
+    strip_prefix = "flatbuffers-2.0.5",
+    urls = ["https://github.com/greigdillon/flatbuffers/archive/refs/tags/v2.0.5.zip"],
+)
+
+#date
+http_archive(
+    name = "com_date",
+    build_file_content =
+        """
+# TODO(keir): Replace this with a better version, like from TensorFlow.
+# See https://github.com/ceres-solver/ceres-solver/issues/337.
+cc_library(
+    name = 'date',
+    srcs = [],
+    includes = ['include'],
+    hdrs = glob(['include/date/**']),
+    visibility = ['//visibility:public'],
+)
+""",
+    strip_prefix = "date-3.0.1",
+    urls = [
+        "https://github.com/greigdillon/date/archive/refs/tags/v3.0.1.tar.gz",
+    ],
+)

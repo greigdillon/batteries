@@ -1,5 +1,5 @@
-#include "hello.h"
+#include "absl/strings/substitute.h"
 
 int main(){
-  sayHello();  
+  absl::Substitute("Hello");
 }
