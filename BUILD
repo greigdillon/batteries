@@ -1,22 +1,21 @@
 cc_library(
-  name = "grpc_clang_13",  
+  name = "batteries",  
   hdrs = glob(["include/**"]),
   srcs = glob(["lib/**"]),
   includes = ["include","include/objectbox"],
   copts = ["-fpic",],
   linkopts = ["-lpthread","-ldl"],
-  visibility = ["//visibility:public"],  
-  linkstatic = True,
+  visibility = ["//visibility:public"],    
 )
 
 cc_test(
   name = "test",
-  deps = ["grpc_clang_13"],
+  deps = [":batteries"],
   srcs = ["test.cpp"],
 )
 
 cc_binary(
   name = "main",
-  deps = [":grpc_clang_13"],
+  deps = [":batteries"],
   srcs = ["main.cpp"],
 )
