@@ -21,7 +21,7 @@ archive_file = "release/batteries_"+git_branch+".tar.xz"
 with open("package.yaml", 'r') as stream:
     data_loaded = yaml.safe_load(stream)
 
-tar = tarfile.open(archive_file, "w:gz")
+tar = tarfile.open(archive_file, "w:xz")
 for name in data_loaded["package"]:
     tar.add(name)
 tar.close()

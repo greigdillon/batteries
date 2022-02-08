@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 #include "grpc/grpc.h"
 #include "include/flatbuffers/base.h"
-#include "protobuf/port_def.inc"
+#include "google/protobuf/port_def.inc"
 #include "flatbuffers/flatbuffers.h"
 #include "objectbox/objectbox.h"
 #include "boost/version.hpp"
